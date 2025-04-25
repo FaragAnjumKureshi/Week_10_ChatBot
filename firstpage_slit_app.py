@@ -7,7 +7,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
 placeholderstr = "Type a sentence about which page you'd like to visit"
-user_name = "Your Name"
+user_name = "Farag"
 user_image = "https://www.w3schools.com/howto/img_avatar.png"
 page_names = ["Chatbot", "SVD vs. Word2Vec Analysis", "Modified Skip-gram Model", "Modified CBOW Model"]
 navigation_prompts = [
