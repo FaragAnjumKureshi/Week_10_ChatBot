@@ -1,31 +1,18 @@
 import streamlit as st
+import re
 from openai import OpenAI
 import time
 import re
-from word2vec_visualization import word2vec_visualization_page # Import the function
+from word2vec_visualization import word2vec_visualization_page
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
 
 placeholderstr = "Type a sentence about which page you'd like to visit"
 user_name = "Farag"
 user_image = "https://www.w3schools.com/howto/img_avatar.png"
 page_names = ["Chatbot", "Word2Vec Visualization", "Modified Skip-gram Model", "Modified CBOW Model"]
-navigation_prompts = [
-    "Take me to the chatbot page.",
-    "I want to see the Word2Vec visualization.",
-    "Show me the modified Skip-gram model results.",
-    "Navigate to the CBOW model section.",
-    "Can you go to the chatbot?",
-    "Let's look at the Word2Vec embeddings.",
-    "I'm interested in the Skip-gram model with changes.",
-    "Show me the results for the altered CBOW.",
-    "Go to the page with the chat interface.",
-    "I'd like to see the Word2Vec visualization.",
-    "Present the findings for the adjusted Skip-gram.",
-    "Take me to the modified CBOW results.",
-    "Chatbot please.",
-    "Word2Vec visualization.",
-    "Modified Skipgram.",
-    "CBOW Model.",
-]
+
 
 def stream_data(stream_str):
     for word in stream_str.split(" "):
@@ -33,17 +20,18 @@ def stream_data(stream_str):
         time.sleep(0.15)
 
 def generate_response(prompt):
-    prompt = prompt.lower()
-    if "chatbot" in prompt:
+    prompt_lower = prompt.lower()
+
+    if re.search(r"(chatbot|chat\s*bot|chat\s+interface)", prompt_lower):
         return "Okay, navigating to the Chatbot page."
-    elif "word2vec" in prompt and "visual" in prompt:
+    elif re.search(r"(word2vec\s+visual(s)?|word\s+embeddings\s+visual(s)?|word2vec\s+plot(s)?|word\s+embedding\s+plot(s)?)", prompt_lower):
         return "Alright, let's go to the Word2Vec Visualization page."
-    elif "skip-gram" in prompt:
+    elif re.search(r"(modified\s+skip\s*-?gram|skip\s*-?gram\s+modified|altered\s+skip\s*-?gram)", prompt_lower):
         return "Taking you to the Modified Skip-gram Model page."
-    elif "cbow" in prompt:
+    elif re.search(r"(modified\s+cbow|cbow\s+modified|altered\s+cbow)", prompt_lower):
         return "Heading over to the Modified CBOW Model page."
     else:
-        return "Sorry, I'm not sure which page you're asking for. Please try rephrasing."
+        return "Sorry, I'm not sure which page you're asking for. Please try being more specific."
 
 def chatbot_page():
     st.title(f"💬 {user_name}'s Navigation Bot")
@@ -63,6 +51,7 @@ def chatbot_page():
 
     def navigate_to_page(page_name):
         st.session_state['current_page'] = page_name
+        print(f"Navigating to: {page_name}")
 
     def chat(prompt: str):
         st_c_chat.chat_message("user", avatar=user_image).write(prompt)
@@ -70,18 +59,19 @@ def chatbot_page():
 
         response = generate_response(prompt)
         st.session_state.messages.append({"role": "assistant", "content": response})
+        st_c_chat.chat_message("assistant").write_stream(stream_data(response))
 
-        # Delayed navigation based on the response
-        if "chatbot" in response.lower():
+        prompt_lower = prompt.lower()
+        if re.search(r"(chatbot|chat\s*bot|chat\s+interface)", prompt_lower):
             time.sleep(1)
             navigate_to_page("Chatbot")
-        elif "word2vec" in response.lower() and "visual" in response.lower():
+        elif re.search(r"(word2vec\s+visual(s)?|word\s+embeddings\s+visual(s)?|word2vec\s+plot(s)?|word\s+embedding\s+plot(s)?)", prompt_lower):
             time.sleep(1)
             navigate_to_page("Word2Vec Visualization")
-        elif "skip-gram" in response.lower():
+        elif re.search(r"(modified\s+skip\s*-?gram|skip\s*-?gram\s+modified|altered\s+skip\s*-?gram)", prompt_lower):
             time.sleep(1)
             navigate_to_page("Modified Skip-gram Model")
-        elif "cbow" in response.lower():
+        elif re.search(r"(modified\s+cbow|cbow\s+modified|altered\s+cbow)", prompt_lower):
             time.sleep(1)
             navigate_to_page("Modified CBOW Model")
 
@@ -112,3 +102,5 @@ elif st.session_state['current_page'] == "Modified Skip-gram Model":
     modified_skipgram_page()
 elif st.session_state['current_page'] == "Modified CBOW Model":
     modified_cbow_page()
+
+#st.write(st.session_state.get('current_page'))
