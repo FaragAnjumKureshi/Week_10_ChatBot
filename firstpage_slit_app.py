@@ -73,7 +73,7 @@ def chatbot_page():
         elif re.search(r"(skipgram|modified\s+skip\s*-?gram|skip\s*-?gram\s+modified|altered\s+skip\s*-?gram)", prompt_lower):
             time.sleep(1)
             navigate_to_page("Modified Skip-gram Model")
-        elif re.search(r"(modified\s+cbow|cbow\s+modified|altered\s+cbow)", prompt_lower):
+        elif re.search(r"(cbow|modified\s+cbow|cbow\s+modified|altered\s+cbow)", prompt_lower):
             time.sleep(1)
             navigate_to_page("Modified CBOW Model")
 
