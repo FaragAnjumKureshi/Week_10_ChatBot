@@ -4,6 +4,7 @@ from openai import OpenAI
 import time
 import re
 from word2vec_visualization import word2vec_visualization_page
+from modified_skipgram import modified_skipgram_page
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
@@ -78,13 +79,6 @@ def chatbot_page():
     if prompt := st.chat_input(placeholder=placeholderstr, key="navigation_bot"):
         chat(prompt)
 
-def modified_skipgram_page():
-    st.title("Modified Skip-gram Model")
-    st.write("Results of Skip-gram model with modified parameters...")
-    new_sentence = st.text_input("Enter a new sentence to try with the Skip-gram model:")
-    if new_sentence:
-        output = f"You entered: '{new_sentence}'. Here's some output from the Skip-gram model (to be implemented)."
-        st.write(output)
 
 def modified_cbow_page():
     st.title("Modified CBOW Model")
