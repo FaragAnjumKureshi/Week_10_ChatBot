@@ -9,7 +9,7 @@ def modified_cbow_page():
 
     # Sample sentences
     sentences = [
-        "The fluffy golden retriever barked happily at the mailman who walked down the sunny street.",
+        "The fluffy golden dog retriever barked happily at the mailman who walked down the sunny street.",
         "A sleek black cat silently stalked a small mouse hiding beneath the old wooden table.",
         "Eating a ripe red apple after a long run is incredibly refreshing and healthy.",
         "Sipping a cold glass of freshly squeezed orange juice on a hot day is quite invigorating.",
