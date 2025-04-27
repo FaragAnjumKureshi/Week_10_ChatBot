@@ -67,7 +67,7 @@ def chatbot_page():
         if re.search(r"(chatbot|chat\s*bot|chat\s+interface)", prompt_lower):
             time.sleep(1)
             navigate_to_page("Chatbot")
-        elif re.search(r"(wordtovec(s)|word2vec(s)|word2vec\s+visual(s)?|word\s+embeddings\s+visual(s)?|word2vec\s+plot(s)?|word\s+embedding\s+plot(s)?)", prompt_lower):
+        elif re.search(r"(word2vec\s+visual(s)?|word\s+embeddings\s+visual(s)?|word2vec\s+plot(s)?|word\s+embedding\s+plot(s)?)", prompt_lower):
             time.sleep(1)
             navigate_to_page("Word2Vec Visualization")
         elif re.search(r"(skipgram|modified\s+skip\s*-?gram|skip\s*-?gram\s+modified|altered\s+skip\s*-?gram)", prompt_lower):
