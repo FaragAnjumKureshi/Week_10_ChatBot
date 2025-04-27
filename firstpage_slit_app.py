@@ -96,5 +96,4 @@ elif st.session_state['current_page'] == "Modified Skip-gram Model":
     modified_skipgram_page()
 elif st.session_state['current_page'] == "Modified CBOW Model":
     modified_cbow_page()
-
 #st.write(st.session_state.get('current_page'))
