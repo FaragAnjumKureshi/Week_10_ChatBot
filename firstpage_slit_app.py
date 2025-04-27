@@ -5,6 +5,7 @@ import time
 import re
 from word2vec_visualization import word2vec_visualization_page
 from modified_skipgram import modified_skipgram_page
+from modified_cbow import modified_cbow_page
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
@@ -66,10 +67,10 @@ def chatbot_page():
         if re.search(r"(chatbot|chat\s*bot|chat\s+interface)", prompt_lower):
             time.sleep(1)
             navigate_to_page("Chatbot")
-        elif re.search(r"(word2vec\s+visual(s)?|word\s+embeddings\s+visual(s)?|word2vec\s+plot(s)?|word\s+embedding\s+plot(s)?)", prompt_lower):
+        elif re.search(r"(wordtovec(s)|word2vec(s)|word2vec\s+visual(s)?|word\s+embeddings\s+visual(s)?|word2vec\s+plot(s)?|word\s+embedding\s+plot(s)?)", prompt_lower):
             time.sleep(1)
             navigate_to_page("Word2Vec Visualization")
-        elif re.search(r"(modified\s+skip\s*-?gram|skip\s*-?gram\s+modified|altered\s+skip\s*-?gram)", prompt_lower):
+        elif re.search(r"(skipgram|modified\s+skip\s*-?gram|skip\s*-?gram\s+modified|altered\s+skip\s*-?gram)", prompt_lower):
             time.sleep(1)
             navigate_to_page("Modified Skip-gram Model")
         elif re.search(r"(modified\s+cbow|cbow\s+modified|altered\s+cbow)", prompt_lower):
@@ -78,15 +79,6 @@ def chatbot_page():
 
     if prompt := st.chat_input(placeholder=placeholderstr, key="navigation_bot"):
         chat(prompt)
-
-
-def modified_cbow_page():
-    st.title("Modified CBOW Model")
-    st.write("Results of CBOW model with modified parameters...")
-    new_sentence = st.text_input("Enter a new sentence to try with the CBOW model:")
-    if new_sentence:
-        output = f"You entered: '{new_sentence}'. Here's some output from the CBOW model (to be implemented)."
-        st.write(output)
 
 if 'current_page' not in st.session_state or st.session_state['current_page'] == "Chatbot":
     chatbot_page()
